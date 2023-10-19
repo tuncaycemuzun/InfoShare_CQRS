@@ -8,6 +8,6 @@ namespace InfoShare_CQRS.Data.Repositories
         Task<T> AddAsync(T entity);
         Task<T> UpdateAsync(T entity);
         Task<T> DeleteAsync(T entity);
-        
+        Task<int> SaveChangesAsync();
     }
 }

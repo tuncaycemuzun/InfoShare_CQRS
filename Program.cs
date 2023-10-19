@@ -1,11 +1,9 @@
 using InfoShare_CQRS.Data.Contexts;
+using InfoShare_CQRS.Data.Repositories;
 using InfoShare_CQRS.Mediatr.EventHandlers;
 using InfoShare_CQRS.Mediatr.Events;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,11 +17,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 builder.Services.AddScoped<INotificationHandler<ProductCreatedEvent>, ProductCreatedEventHandler>(); // Event handler'ý ekleyin
 
+var a = builder.Configuration.GetConnectionString("ReadDbContext");
+var b = builder.Configuration.GetConnectionString("WriteDbContext");
+
 builder.Services.AddDbContext<ReadDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("ReadDbContext")));
 builder.Services.AddDbContext<WriteDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("WriteDbContext")));
 
-builder.Services.AddScoped<DbContext, ReadDbContext>();
-builder.Services.AddScoped<DbContext, WriteDbContext>();
+builder.Services.AddScoped<WriteDbContext>();
+builder.Services.AddScoped<ReadDbContext>();
+
+builder.Services.AddScoped(typeof(IReadRepository<>), typeof(ReadRepository<>));
+builder.Services.AddScoped(typeof(IWriteRepository<>), typeof(WriteRepository<>));
 
 builder.Services.AddCors(options =>
 {

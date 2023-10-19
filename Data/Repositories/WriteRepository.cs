@@ -1,6 +1,4 @@
 ﻿using InfoShare_CQRS.Data.Contexts;
-using Microsoft.EntityFrameworkCore;
-using System.Linq.Expressions;
 
 namespace InfoShare_CQRS.Data.Repositories
 {
@@ -25,6 +23,11 @@ namespace InfoShare_CQRS.Data.Repositories
             _writeDbContext.Set<T>().Remove(entity);
             await _writeDbContext.SaveChangesAsync();
             return entity;
+        }
+
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _writeDbContext.SaveChangesAsync();
         }
 
         public async Task<T> UpdateAsync(T entity)
