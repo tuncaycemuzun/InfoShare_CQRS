@@ -15,13 +15,22 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
-builder.Services.AddScoped<INotificationHandler<ProductCreatedEvent>, ProductCreatedEventHandler>(); // Event handler'ý ekleyin
+
+
+builder.Services.AddScoped<INotificationHandler<ProductCreatedEvent>, ProductCreatedEventHandler>(); 
+builder.Services.AddScoped<INotificationHandler<BrandCreatedEvent>, BrandCreatedEventHandler>(); 
 
 var a = builder.Configuration.GetConnectionString("ReadDbContext");
 var b = builder.Configuration.GetConnectionString("WriteDbContext");
 
-builder.Services.AddDbContext<ReadDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("ReadDbContext")));
-builder.Services.AddDbContext<WriteDbContext>(options => options.UseNpgsql(builder.Configuration.GetConnectionString("WriteDbContext")));
+builder.Services.AddDbContext<ReadDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("ReadDbContext"));
+});
+builder.Services.AddDbContext<WriteDbContext>(options =>
+{
+    options.UseNpgsql(builder.Configuration.GetConnectionString("WriteDbContext"));
+});
 
 builder.Services.AddScoped<WriteDbContext>();
 builder.Services.AddScoped<ReadDbContext>();

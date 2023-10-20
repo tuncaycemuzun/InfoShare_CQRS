@@ -24,8 +24,11 @@ namespace InfoShare_CQRS.Mediatr.Handlers
                 Name = request.Name,
             });
 
+            await _repository.SaveChangesAsync();
+
             var brandCreatedEvent = new BrandCreatedEvent
             {
+                Id = brand.Id,
                 Name = request.Name,
             };
 

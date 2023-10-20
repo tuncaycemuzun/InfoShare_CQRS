@@ -1,4 +1,5 @@
 ﻿using InfoShare_CQRS.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace InfoShare_CQRS.Data.Repositories
 {

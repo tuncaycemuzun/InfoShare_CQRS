@@ -23,6 +23,7 @@ namespace InfoShare_CQRS.Mediatr.EventHandlers
                 Id = notification.ProductId,
                 Name = notification.Name,
                 Price = notification.Price,
+                BrandId = notification.BrandId
             });
 
             await _context.SaveChangesAsync();

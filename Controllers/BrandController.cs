@@ -24,8 +24,8 @@ namespace InfoShare_CQRS.Controllers
             return Ok(brand.Id);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Brand>> GetBrands(Guid id)
+        [HttpGet]
+        public async Task<ActionResult<Brand>> GetBrands()
         {
             var query = new GetAllBrandQuery();
             var brand = await _mediator.Send(query);

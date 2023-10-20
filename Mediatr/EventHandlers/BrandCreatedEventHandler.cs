@@ -19,6 +19,7 @@ namespace InfoShare_CQRS.Mediatr.EventHandlers
             await _context.Set<Brand>().AddAsync(new Brand
             {
                 Name = notification.Name,
+                Id = notification.Id,
             });
 
             await _context.SaveChangesAsync();

@@ -22,14 +22,18 @@ namespace InfoShare_CQRS.Mediatr.Handlers
             var product = await _repository.AddAsync(new Product
             {
                 Name = request.Name,
-                Price = request.Price
+                Price = request.Price,
+                BrandId = request.BrandId,
             });
+
+            await _repository.SaveChangesAsync();
 
             var productCreatedEvent = new ProductCreatedEvent
             {
                 ProductId = product.Id,
                 Name = request.Name,
-                Price = request.Price
+                Price = request.Price,
+                BrandId = request.BrandId
             };
 
             await _mediator.Publish(productCreatedEvent);
